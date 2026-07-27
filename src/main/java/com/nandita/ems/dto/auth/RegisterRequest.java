@@ -1,5 +1,6 @@
 package com.nandita.ems.dto.auth;
 
+import com.nandita.ems.entity.enums.RoleName;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -20,5 +21,5 @@ public class RegisterRequest {
     private String password;
 
     @NotBlank
-    private String role;
+    private RoleName role;
 }
