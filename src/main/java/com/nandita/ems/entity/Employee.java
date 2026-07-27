@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.*;
+
 @Entity
 @Table(name = "employees")
 @Getter
@@ -17,21 +19,37 @@ import java.util.List;
 @Builder
 public class Employee extends BaseEntity {
 
-    @Column(nullable = false, length = 50)
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50)
+    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true, length = 15)
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(
+            regexp = "^[6-9]\\d{9}$",
+            message = "Enter a valid Indian mobile number"
+    )
+    @Column(nullable = false, unique = true)
     private String phone;
 
+
+    @NotBlank(message = "Address is required")
     @Column(nullable = false)
     private String address;
 
+    @NotNull(message = "Salary is required")
+    @DecimalMin(value = "0.0", inclusive = false)
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
 
+    @NotNull(message = "Joining date is required")
     @Column(nullable = false)
     private LocalDate joiningDate;
 

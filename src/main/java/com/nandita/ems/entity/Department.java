@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "departments")
@@ -15,9 +17,12 @@ import java.util.List;
 @Builder
 public class Department extends BaseEntity {
 
-    @Column(nullable = false, unique = true, length = 100)
+    @NotBlank(message = "Department name is required")
+    @Size(min = 2, max = 100)
+    @Column(nullable = false, unique = true)
     private String name;
 
+    @Size(max = 255)
     @Column(length = 255)
     private String description;
 

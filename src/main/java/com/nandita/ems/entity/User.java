@@ -2,7 +2,9 @@ package com.nandita.ems.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 @Entity
 @Table(
         name = "users",
@@ -18,12 +20,18 @@ import lombok.*;
 @Builder
 public class User extends BaseEntity {
 
-    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Username is required")
+    @Size(min = 3, max = 50)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, max = 100)
     @Column(nullable = false)
     private String password;
 
