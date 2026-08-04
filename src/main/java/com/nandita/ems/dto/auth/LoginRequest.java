@@ -1,5 +1,6 @@
 package com.nandita.ems.dto.auth;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -10,8 +11,9 @@ import lombok.*;
 @Builder
 public class LoginRequest {
 
+    @Email
     @NotBlank
-    private String username;
+    private String email;
 
     @NotBlank
     private String password;
