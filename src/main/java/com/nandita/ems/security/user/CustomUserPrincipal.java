@@ -1,7 +1,6 @@
 package com.nandita.ems.security.user;
 
 import com.nandita.ems.entity.User;
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,19 +8,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@AllArgsConstructor
 public class CustomUserPrincipal implements UserDetails {
 
     private final User user;
+    private final String roleName;
+
+    public CustomUserPrincipal(User user, String roleName) {
+        this.user = user;
+        this.roleName = roleName;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return List.of(
-                new SimpleGrantedAuthority(
-                        "ROLE_" + user.getRole().getName().name()
-                )
-        );
+        return List.of(new SimpleGrantedAuthority("ROLE_" + roleName));
     }
 
     @Override
@@ -33,6 +32,7 @@ public class CustomUserPrincipal implements UserDetails {
     public String getUsername() {
         return user.getEmail();
     }
+
 
     public Long getId() {
         return user.getId();

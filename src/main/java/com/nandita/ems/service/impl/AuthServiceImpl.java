@@ -53,8 +53,7 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         String token = jwtService.generateToken(
-                new CustomUserPrincipal(user));
-
+                new CustomUserPrincipal(user, user.getRole().getName().name()));
         return AuthResponse.builder()
                 .token(token)
                 .tokenType("Bearer")
@@ -73,8 +72,7 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtService.generateToken(
-                new CustomUserPrincipal(user));
-
+                new CustomUserPrincipal(user, user.getRole().getName().name()));
         return AuthResponse.builder()
                 .token(token)
                 .tokenType("Bearer")

@@ -3,6 +3,7 @@ package com.nandita.ems.service.impl;
 import com.nandita.ems.entity.User;
 import com.nandita.ems.repository.UserRepository;
 import com.nandita.ems.security.user.CustomUserPrincipal;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
@@ -20,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found"));
-
-        return new CustomUserPrincipal(user);
+        String roleName = user.getRole().getName().name();
+        return new CustomUserPrincipal(user , roleName);
     }
 }
