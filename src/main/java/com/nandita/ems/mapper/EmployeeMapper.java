@@ -6,7 +6,10 @@ import com.nandita.ems.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        builder = @org.mapstruct.Builder(disableBuilder = true)
+)
 public interface EmployeeMapper {
 
     @Mapping(target = "id", ignore = true)

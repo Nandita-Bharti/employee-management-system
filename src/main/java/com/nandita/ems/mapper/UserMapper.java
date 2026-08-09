@@ -5,7 +5,10 @@ import com.nandita.ems.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        builder = @org.mapstruct.Builder(disableBuilder = true)
+)
 public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)

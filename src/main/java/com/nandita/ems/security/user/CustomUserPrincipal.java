@@ -49,7 +49,7 @@ public class CustomUserPrincipal implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.isEnabled();
+        return user.isAccountNonLocked();
     }
 
     @Override

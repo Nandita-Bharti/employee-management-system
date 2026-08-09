@@ -6,7 +6,10 @@ import com.nandita.ems.entity.Department;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        builder = @org.mapstruct.Builder(disableBuilder = true)
+)
 public interface DepartmentMapper {
 
     @Mapping(target = "id", ignore = true)
