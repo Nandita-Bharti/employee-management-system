@@ -4,6 +4,7 @@ import com.nandita.ems.dto.document.DocumentRequest;
 import com.nandita.ems.dto.document.DocumentResponse;
 import com.nandita.ems.entity.Document;
 import com.nandita.ems.entity.Employee;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.mapper.DocumentMapper;
 import com.nandita.ems.repository.DocumentRepository;
 import com.nandita.ems.repository.EmployeeRepository;
@@ -26,7 +27,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponse create(DocumentRequest request) {
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         Document document = documentMapper.toEntity(request);
 
@@ -41,10 +42,10 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponse update(Long id, DocumentRequest request) {
 
         Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Document not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         document.setEmployee(employee);
         document.setDocumentType(request.getDocumentType());
@@ -60,7 +61,7 @@ public class DocumentServiceImpl implements DocumentService {
     public DocumentResponse getById(Long id) {
 
         Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Document not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
 
         return documentMapper.toResponse(document);
     }
@@ -78,7 +79,7 @@ public class DocumentServiceImpl implements DocumentService {
     public void delete(Long id) {
 
         Document document = documentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Document not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Document not found"));
 
         documentRepository.delete(document);
     }

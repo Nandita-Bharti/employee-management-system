@@ -4,6 +4,7 @@ import com.nandita.ems.dto.attendance.AttendanceRequest;
 import com.nandita.ems.dto.attendance.AttendanceResponse;
 import com.nandita.ems.entity.Attendance;
 import com.nandita.ems.entity.Employee;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.mapper.AttendanceMapper;
 import com.nandita.ems.repository.AttendanceRepository;
 import com.nandita.ems.repository.EmployeeRepository;
@@ -26,7 +27,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceResponse create(AttendanceRequest request) {
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         Attendance attendance = attendanceMapper.toEntity(request);
         attendance.setEmployee(employee);
@@ -40,10 +41,10 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceResponse update(Long id, AttendanceRequest request) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         attendance.setEmployee(employee);
         attendance.setAttendanceDate(request.getAttendanceDate());
@@ -60,7 +61,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceResponse getById(Long id) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
 
         return attendanceMapper.toResponse(attendance);
     }
@@ -78,7 +79,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public List<AttendanceResponse> getByEmployee(Long employeeId) {
 
         if (!employeeRepository.existsById(employeeId)) {
-            throw new RuntimeException("Employee not found");
+            throw new ResourceNotFoundException("Employee not found");
         }
 
         return attendanceRepository.findByEmployeeId(employeeId)
@@ -100,7 +101,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void delete(Long id) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found"));
 
         attendanceRepository.delete(attendance);
     }

@@ -3,6 +3,7 @@ package com.nandita.ems.service.impl;
 import com.nandita.ems.dto.department.DepartmentRequest;
 import com.nandita.ems.dto.department.DepartmentResponse;
 import com.nandita.ems.entity.Department;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.mapper.DepartmentMapper;
 import com.nandita.ems.repository.DepartmentRepository;
 import com.nandita.ems.service.DepartmentService;
@@ -22,7 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponse create(DepartmentRequest request) {
 
         if (departmentRepository.existsByName(request.getName())) {
-            throw new RuntimeException("Department already exists");
+            throw new ResourceNotFoundException("Department already exists");
         }
 
         Department department = departmentMapper.toEntity(request);
@@ -36,11 +37,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponse update(Long id, DepartmentRequest request) {
 
         Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
 
         if (!department.getName().equals(request.getName())
                 && departmentRepository.existsByName(request.getName())) {
-            throw new RuntimeException("Department already exists");
+            throw new ResourceNotFoundException("Department already exists");
         }
 
         department.setName(request.getName());
@@ -55,7 +56,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponse getById(Long id) {
 
         Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
 
         return departmentMapper.toResponse(department);
     }
@@ -73,7 +74,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void delete(Long id) {
 
         Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
 
         departmentRepository.delete(department);
     }

@@ -63,11 +63,28 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html")
-                        .permitAll()
+                                "/swagger-ui.html"
+                        ).permitAll()
 
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers(
+                                "/api/departments/**"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                "/api/employees/**"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                "/api/leaves/*/approve",
+                                "/api/leaves/*/reject"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                "/api/documents/**"
+                        ).hasRole("ADMIN")
+
+                        .anyRequest().authenticated()
+                )
 
                 .authenticationProvider(authenticationProvider())
 

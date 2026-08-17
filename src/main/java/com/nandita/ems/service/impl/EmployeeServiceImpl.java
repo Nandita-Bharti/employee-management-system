@@ -3,6 +3,7 @@ import com.nandita.ems.dto.employee.EmployeeRequest;
 import com.nandita.ems.dto.employee.EmployeeResponse;
 import com.nandita.ems.entity.Department;
 import com.nandita.ems.entity.Employee;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.mapper.EmployeeMapper;
 import com.nandita.ems.repository.DepartmentRepository;
 import com.nandita.ems.repository.EmployeeRepository;
@@ -27,11 +28,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse create(EmployeeRequest request) {
 
         if (employeeRepository.existsByPhone(request.getPhone())) {
-            throw new RuntimeException("Phone number already exists");
+            throw new ResourceNotFoundException("Phone number already exists");
         }
 
         Department department = departmentRepository.findById(request.getDepartmentId())
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
 
         Employee employee = employeeMapper.toEntity(request);
 
@@ -45,10 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse update(Long id, EmployeeRequest request) {
 
         Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         Department department = departmentRepository.findById(request.getDepartmentId())
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
 
         employee.setFirstName(request.getFirstName());
         employee.setLastName(request.getLastName());
@@ -67,7 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse getById(Long id) {
 
         Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         return employeeMapper.toResponse(employee);
     }
@@ -77,7 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
 
         Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         employeeRepository.delete(employee);
     }

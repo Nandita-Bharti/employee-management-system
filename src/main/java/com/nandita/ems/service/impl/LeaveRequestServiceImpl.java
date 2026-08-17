@@ -5,6 +5,7 @@ import com.nandita.ems.dto.leave.LeaveResponse;
 import com.nandita.ems.entity.Employee;
 import com.nandita.ems.entity.LeaveRequest;
 import com.nandita.ems.entity.enums.LeaveStatus;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.mapper.LeaveRequestMapper;
 import com.nandita.ems.repository.EmployeeRepository;
 import com.nandita.ems.repository.LeaveRequestRepository;
@@ -26,7 +27,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponse create(LeaveRequestDto request) {
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         LeaveRequest leaveRequest = leaveRequestMapper.toEntity(request);
 
@@ -42,10 +43,10 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponse update(Long id, LeaveRequestDto request) {
 
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
         Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         leaveRequest.setEmployee(employee);
         leaveRequest.setLeaveType(request.getLeaveType());
@@ -62,7 +63,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponse getById(Long id) {
 
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
         return leaveRequestMapper.toResponse(leaveRequest);
     }
@@ -80,7 +81,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public List<LeaveResponse> getByEmployee(Long employeeId) {
 
         if (!employeeRepository.existsById(employeeId)) {
-            throw new RuntimeException("Employee not found");
+            throw new ResourceNotFoundException("Employee not found");
         }
 
         return leaveRequestRepository.findByEmployeeId(employeeId)
@@ -93,7 +94,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponse approve(Long id) {
 
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
         leaveRequest.setStatus(LeaveStatus.APPROVED);
 
@@ -106,7 +107,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public LeaveResponse reject(Long id) {
 
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
         leaveRequest.setStatus(LeaveStatus.REJECTED);
 
@@ -119,7 +120,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public void delete(Long id) {
 
         LeaveRequest leaveRequest = leaveRequestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Leave request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
         leaveRequestRepository.delete(leaveRequest);
     }

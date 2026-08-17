@@ -4,6 +4,7 @@ import com.nandita.ems.dto.auth.AuthResponse;
 import com.nandita.ems.dto.auth.LoginRequest;
 import com.nandita.ems.dto.auth.RegisterRequest;
 import com.nandita.ems.entity.User;
+import com.nandita.ems.exception.ResourceNotFoundException;
 import com.nandita.ems.repository.RoleRepository;
 import com.nandita.ems.repository.UserRepository;
 import com.nandita.ems.security.jwt.JwtService;
@@ -38,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         Role role = roleRepository.findByName(request.getRole())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -69,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
                         request.getPassword()));
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String token = jwtService.generateToken(
                 new CustomUserPrincipal(user, user.getRole().getName().name()));
