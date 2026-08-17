@@ -474,13 +474,12 @@ Below are screenshots from Swagger UI showing successful API testing for each mo
 
 | # | Screenshot | Description |
 |---|------------|--------------|
-| 1 | ![Screenshot 1](screenshots/screenshot-1.png) | *e.g. Authentication — Register & Login* |
-| 2 | ![Screenshot 2](screenshots/screenshot-2.png) | *e.g. Employee CRUD operations* |
-| 3 | ![Screenshot 3](screenshots/screenshot-3.png) | *e.g. Department CRUD operations* |
-| 4 | ![Screenshot 4](screenshots/screenshot-4.png) | *e.g. Attendance check-in/check-out* |
-| 5 | ![Screenshot 5](screenshots/screenshot-5.png) | *e.g. Leave request & approval flow* |
-| 6 | ![Screenshot 6](screenshots/screenshot-6.png) | *e.g. Document management* |
-| 7 | ![Screenshot 7](screenshots/screenshot-7.png) | *e.g. Swagger — JWT Authorize flow* |
+| 1 | ![Screenshot 1](screenshots/login.png) | *e.g. Authentication — Register & Login* |
+| 2 | ![Screenshot 2](screenshots/employee.png) | *e.g. Employee CRUD operations* |
+| 3 | ![Screenshot 3](AdminAuth/.png) | *e.g. Department CRUD operations with ADMIN role* |
+| 4 | ![Screenshot 4](screenshots/RoleBasedAuth.png) | *e.g. Role Based Authorization using EMPLOYEE* |
+| 5 | ![Screenshot 5](screenshots/LeaveRequset.png) | *e.g. Leave request & approval flow* |
+| 6 | ![Screenshot 6](screenshots/ExceptionHandling.png) | *e.g. GlobalExceptionHandling* |
 
 > 📁 Add your screenshots to a `screenshots/` folder in the repo root, name them `screenshot-1.png` through `screenshot-7.png` (or update the filenames above), and update the descriptions to match what each image shows.
 
