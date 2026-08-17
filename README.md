@@ -476,7 +476,7 @@ Below are screenshots from Swagger UI showing successful API testing for each mo
 |---|------------|--------------|
 | 1 | ![Screenshot 1](screenshots/login.png) | *e.g. Authentication — Register & Login* |
 | 2 | ![Screenshot 2](screenshots/employee.png) | *e.g. Employee CRUD operations* |
-| 3 | ![Screenshot 3](AdminAuth/.png) | *e.g. Department CRUD operations with ADMIN role* |
+| 3 | ![Screenshot 3](screenshots/AdminAuth/.png) | *e.g. Department CRUD operations with ADMIN role* |
 | 4 | ![Screenshot 4](screenshots/RoleBasedAuth.png) | *e.g. Role Based Authorization using EMPLOYEE* |
 | 5 | ![Screenshot 5](screenshots/LeaveRequest.png) | *e.g. Leave request & approval flow* |
 | 6 | ![Screenshot 6](screenshots/ExceptionHandling.png) | *e.g. GlobalExceptionHandling* |
